@@ -1,34 +1,52 @@
 import random
 import replit
-print("Welcome to the number guessing game!")
-print("I'm thinking of a number between 1 and 100.")
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ")
-  
-def difficulty_setting():
-  if difficulty == "easy":
-    return 4
-  elif difficulty == "hard":
-    return 9
-  
-attempts = difficulty_setting()
-  
-number = random.randint(1, 100)
-print(f"Psst the number is {number}.")
-  
-def attempt():
-  guess = int(input("Make a guess: "))
-  if guess == number:
-    return guess
-  elif guess < number:
-    print("Too low.")
-  elif guess > number:
-    print("Too high")
-      
-def run_the_game():
-  while attempt() != number:
-    attempt()
-  else:
-    print("You won!!")
 
-run_the_game()
- 
+def pick_a_number():
+  my_number = input("Choose a number: ")
+  return my_number
+  
+def number():
+  number = random.randint(1, 100)
+  return number
+
+def difficulty_level():
+  difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ")
+  if difficulty == "easy":
+    return 5
+  elif difficulty == "hard":
+    return 10
+  else:
+    print("ERROR!!")
+    difficulty_level()
+  
+def run_game():
+  
+  #Main variables
+  hidden_number = number()
+  attempts = difficulty_level()
+  another_try = True
+  print(f"Psst... the number is {hidden_number}.")
+  
+  #Attempt
+  while another_try == True:
+    print(f"You have {attempts} tries left.")
+    chosen_number = int(input("Choose a number: "))
+    attempts -= 1
+    if chosen_number == hidden_number:
+      print("You win!")
+      another_try = False
+    elif attempts > 0 and chosen_number < hidden_number:
+      print("Too low! Try again.")
+    elif attempts > 0 and chosen_number > hidden_number:
+      print("Too high! Try again.")
+    else:
+      print("You lost!")
+      another_try = False
+      
+while input("Do you want to play a round? 'y' or 'n': ") == "y":
+  replit.clear()
+  print("Welcome to the number guessing game!")
+  print("I'm thinking of a number between 1 and 100.")
+  run_game()
+else: 
+  print("Good bye!")
